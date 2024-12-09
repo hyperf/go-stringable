@@ -16,3 +16,8 @@ func TestStringable_StrPad(t *testing.T) {
 func TestStringable_Md5(t *testing.T) {
 	assert.Equal(t, "ebcd082fe9479bc278628297985ca2ba", Md5("Hyperf"))
 }
+
+func TestStringable_Random(t *testing.T) {
+	res, _ := Random(6)
+	assert.NotEmpty(t, res)
+}

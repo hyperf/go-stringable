@@ -2,8 +2,10 @@ package go_stringable
 
 import (
 	"crypto/md5"
+	"crypto/rand"
 	"encoding/hex"
 	"errors"
+	"math/big"
 )
 
 const STR_PAD_LEFT = 0
@@ -51,4 +53,17 @@ func Md5(str string) string {
 	h := md5.New()
 	h.Write([]byte(str))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+func Random(n int) (string, error) {
+	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	result := make([]byte, n)
+	for i := range result {
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(letters))))
+		if err != nil {
+			return "", err
+		}
+		result[i] = letters[num.Int64()]
+	}
+	return string(result), nil
 }
