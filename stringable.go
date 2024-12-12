@@ -71,3 +71,65 @@ func Random(n int) (string, error) {
 	}
 	return string(result), nil
 }
+
+func MaskByStar(value string, offset int, length int) string {
+	return Mask(value, offset, length, "*")
+}
+
+func MaskLastByStar(value string, offset int) string {
+	return Mask(value, offset, 0, "*")
+}
+
+func Mask(value string, offset int, length int, replacement string) string {
+	l := len(value)
+	absOffset := abs(offset)
+	if length < 0 || l <= absOffset {
+		return value
+	}
+
+	replaceLength := length
+	if length == 0 {
+		replaceLength = l - absOffset
+	}
+
+	values := []rune(value)
+	replacements := []rune(Repeat(replacement, replaceLength))
+	var res []rune
+	if offset >= 0 {
+		res = append(values[0:offset], replacements...)
+		res = append(res, values[offset+replaceLength:]...)
+		return string(res)
+	}
+
+	if l+offset-replaceLength > 0 {
+		res = append(values[0:l+offset-replaceLength], replacements...)
+	} else {
+		res = replacements
+	}
+	res = append(res, values[l+offset:]...)
+	return string(res)
+}
+
+func RepeatRunes(value []rune, length int) []rune {
+	var res []rune
+	for i := 0; i < length; i++ {
+		res = append(res, value...)
+	}
+	return res
+}
+
+func Repeat(value string, n int) string {
+	if value == "" || n <= 0 {
+		return ""
+	}
+
+	return string(RepeatRunes([]rune(value), n))
+}
+
+func abs(value int) int {
+	if value < 0 {
+		return -value
+	}
+
+	return value
+}
