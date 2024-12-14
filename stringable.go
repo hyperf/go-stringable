@@ -60,7 +60,10 @@ func Md5ByteArray(str []byte) string {
 }
 
 func Random(n int) (string, error) {
-	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	return RandomLetters(n, "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+}
+
+func RandomLetters(n int, letters string) (string, error) {
 	result := make([]byte, n)
 	for i := range result {
 		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(letters))))
@@ -70,6 +73,10 @@ func Random(n int) (string, error) {
 		result[i] = letters[num.Int64()]
 	}
 	return string(result), nil
+}
+
+func RandomNumber(n int) (string, error) {
+	return RandomLetters(n, "0123456789")
 }
 
 func MaskByStar(value string, offset int, length int) string {

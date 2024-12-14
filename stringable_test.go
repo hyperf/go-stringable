@@ -21,6 +21,9 @@ func TestStringable_Md5(t *testing.T) {
 func TestStringable_Random(t *testing.T) {
 	res, _ := Random(6)
 	assert.NotEmpty(t, res)
+
+	res, _ = RandomNumber(6)
+	assert.NotEmpty(t, res)
 }
 
 func TestStringable_Repeat(t *testing.T) {
