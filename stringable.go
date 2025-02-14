@@ -6,6 +6,8 @@ import (
 	"encoding/hex"
 	"errors"
 	"math/big"
+	"strings"
+	"unicode"
 )
 
 const STR_PAD_LEFT = 0
@@ -131,6 +133,38 @@ func Repeat(value string, n int) string {
 	}
 
 	return string(RepeatRunes([]rune(value), n))
+}
+
+func Snake(value string) string {
+	return SnakeWithDelimiter(value, '_')
+}
+
+func SnakeWithDelimiter(value string, delimiter byte) string {
+	var builder strings.Builder
+	for i, r := range value {
+		if unicode.IsUpper(r) && i != 0 {
+			builder.WriteByte(delimiter)
+		}
+		builder.WriteRune(unicode.ToLower(r))
+	}
+	return builder.String()
+}
+
+func Studly(value string) string {
+	parts := strings.Split(value, "_")
+	var builder strings.Builder
+	for _, part := range parts {
+		if part != "" {
+			ps := strings.Split(part, "-")
+			for _, p := range ps {
+				if p != "" {
+					builder.WriteString(strings.Title(strings.ToLower(p)))
+				}
+			}
+		}
+	}
+
+	return builder.String()
 }
 
 func abs(value int) int {
