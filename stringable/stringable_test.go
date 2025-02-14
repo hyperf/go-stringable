@@ -1,4 +1,4 @@
-package go_stringable
+package stringable
 
 import (
 	"github.com/stretchr/testify/assert"
